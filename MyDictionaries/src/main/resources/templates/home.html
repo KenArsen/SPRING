@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>My Dictionaries</title>
+</head>
+<body>
+<div align="center">
+    <div>
+        <h1>All Dictionaries</h1>
+        <a href="/add">Add dictionary</a>
+        <br><br>
+    </div>
+
+    <div>&nbsp;</div>
+    <form th:action="@{/page/1}">
+        <input type="hidden" name="sortField" th:value="${sortField}"/>
+        <input type="hidden" name="sortDir" th:value="${sortDir}"/>
+        Filter: <input type="text" name="keyword" th:value="${keyword}" required/>
+        &nbsp;
+        <input type="submit" value="Search"/>
+        &nbsp;
+        <input type="button" value="Clear" onclick="clearFilter()"/>
+    </form>
+    <div>&nbsp;</div>
+    <div>
+        <table border="3" cellpadding="15">
+            <thead>
+            <tr>
+                <th>
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">ID</a>
+                </th>
+                <th>
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=english&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">ENGLISH</a>
+                </th>
+                <th>
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=russian&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">RUSSIAN</a>
+                </th>
+                <th>ACTIONS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="el : ${dictionaries}">
+                <td th:text="${el.id}"></td>
+                <td th:text="${el.english}"></td>
+                <td th:text="${el.russian}"></td>
+                <td>
+                    <a th:href="@{'/' + ${el.id} + '/edit'}">Edit</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a th:href="@{'/' + ${el.id} + '/delete'}">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>&nbsp;</div>
+    <div th:if="${totalPages > 0}">
+        Total Items: [[${totalItems}]] - [[${currentPage}]] of [[${totalPages}]] <br>
+        <a th:if="${currentPage > 1}" th:href="@{'/page/1?sortField='+ ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">First</a>
+        <span th:unless="${currentPage > 1}">First</span>
+        &nbsp;
+        <a th:if="${currentPage > 1}"
+           th:href="@{'/page/' + ${currentPage - 1}  + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Previous</a>
+        <span th:unless="${currentPage > 1}">Previous</span>
+        &nbsp;
+        <a th:href="@{'/page/' + ${currentPage} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
+           th:text="${currentPage}"></a>
+        &nbsp;
+        <a th:if="${currentPage < totalPages}"
+           th:href="@{'/page/' + ${currentPage + 1}  + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Next</a>
+        <span th:unless="${currentPage < totalPages}">Next</span>
+        &nbsp;
+        <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Last</a>
+        <span th:unless="${currentPage < totalPages}">Last</span>
+</div>
+<script type="text/javascript">
+    function clearFilter() {
+        window.location = "/";
+    }
+</script>
+</body>
+</html>

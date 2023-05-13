@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>Create New Dictionary</title>
+</head>
+<body>
+<div align="center">
+    <h1>Create New Dictionary</h1>
+    <br/>
+    <!-- action бул озуно берилген маалыматтарды кайсы адреске жоноторун коргозот   -->
+    <form action="/add" method="post">
+        <!--        name бул жерге берилген имялар биз коргозгон адрессте колдонулуп ишке ашырылат-->
+        <table border="0" cellpadding="10">
+            <tr>
+                <td>
+                    <input type="text" name="english" placeholder="Enter a word in English"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" name="russian" placeholder="Enter a word in Russian"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button><a href="/">Back</a></button>
+                    <button type="submit" class="btn btn-success">Add dictionary</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>
